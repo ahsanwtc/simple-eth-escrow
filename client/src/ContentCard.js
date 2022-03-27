@@ -7,7 +7,6 @@ const ContentCard = ({ amount: a, title, unit, web3, xs, sm, account, accountLab
   const amount = a ? web3.utils.fromWei(`${a}`, `${unit}`) : 0;
   xs = xs ? xs : 12;
   sm = sm ? sm : 4;
-  console.log({account}, {accountLabel});
   
   return (
     <Grid item xs={xs} sm={sm}>

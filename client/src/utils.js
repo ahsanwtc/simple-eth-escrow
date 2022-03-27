@@ -25,10 +25,10 @@ export const getContract = async web3 => {
   return new web3.eth.Contract(Escrow.abi, Escrow.networks[networkId] && Escrow.networks[networkId].address);
 };
 
-export const whichAccount = ({ account, lawyer, payer, payee }) => {
-  if (account === lawyer) return 'Lawyer account';
-  if (account === payer) return 'Payer account';
-  if (account === payee) return 'Payee account';
+export const whichAccount = ({ account, lawyer, payer, payee }) => { 
+  if (account.toLowerCase() === lawyer.toLowerCase()) { return 'Lawyer account'; }
+  if (account.toLowerCase() === payer.toLowerCase()) { return 'Payer account'; }
+  if (account.toLowerCase() === payee.toLowerCase()) { return 'Payee account'; }
 
   return 'N/A';
 };

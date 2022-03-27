@@ -47,10 +47,12 @@ function App() {
       const registeredPayer = await escrow.methods.payer().call();
       const registeredPayee = await escrow.methods.payee().call();
       const agreedAmount = await escrow.methods.amount().call();
+      const amount = await escrow.methods.getBalance().call();
 
       setWeb3(web3);
       setAccounts(accounts);
       setEscrow(escrow);
+      setAmount(amount);
       setActiveAccount(accounts[0]);
       setRegisteredLawyer(registeredLawyer);
       setRegisteredPayer(registeredPayer);

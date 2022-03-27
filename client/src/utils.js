@@ -24,3 +24,11 @@ export const getContract = async web3 => {
   const networkId = await web3.eth.net.getId();
   return new web3.eth.Contract(Escrow.abi, Escrow.networks[networkId] && Escrow.networks[networkId].address);
 };
+
+export const whichAccount = ({ account, lawyer, payer, payee }) => {
+  if (account === lawyer) return 'Lawyer account';
+  if (account === payer) return 'Payer account';
+  if (account === payee) return 'Payee account';
+
+  return 'N/A';
+};

@@ -1,16 +1,20 @@
-import React from 'react';
-import { Typography, Grid, Paper, Stack } from '@mui/material';
+import React, { useState } from 'react';
+import { Typography, Grid, Paper, Stack, TextField, Button } from '@mui/material';
 import { cyan } from '@mui/material/colors';
 
 
-const ContentCard = ({ amount: a, title, unit, web3, xs, sm, account, accountLabel }) => {
+const ContentCard = ({ amount: a, title, unit, web3, xs, sm, account, accountLabel, background, type, onClickSubmitButton }) => {
   const amount = a ? web3.utils.fromWei(`${a}`, `${unit}`) : 0;
+  const [amountField, setAmountField] = useState('');
   xs = xs ? xs : 12;
   sm = sm ? sm : 4;
+  background = background ? background : cyan[900];
+
+  const actionType = accountLabel === 'Lawyer account' ? 'release' : accountLabel === 'Payer account' ? 'escrow' : null;
   
   return (
     <Grid item xs={xs} sm={sm}>
-      <Paper elevation={12} style={{ background: cyan[900], padding: 10, minHeight: 250, minWidth: 250 }}>
+      <Paper elevation={12} style={{ background: background, padding: 10, minHeight: 250, minWidth: 250 }}>
         <Typography variant='h6'>{title}</Typography>
         {amount !== 0 &&
           <Stack direction="row" justifyContent="flex-start" alignItems="baseline" spacing={0.5}>
@@ -18,10 +22,16 @@ const ContentCard = ({ amount: a, title, unit, web3, xs, sm, account, accountLab
             <Typography variant='overline' style={{ fontSize: '1rem' }}>{unit}</Typography>
           </Stack>
         }
-        {account && accountLabel &&
+        {account && accountLabel && type === 'acount-info' &&
           <Stack>
             <Typography variant='h2'>{accountLabel}</Typography>
             <Typography variant='h5'>{account}</Typography>
+          </Stack>
+        }
+        {account && (actionType === 'release' || actionType === 'escrow') && type === 'transaction' &&
+          <Stack  direction="column" justifyContent="space-arounds" alignItems="center" spacing={2}>
+            {accountLabel === 'Payer account' && <TextField label="Outlined" variant="outlined" onChange={e => setAmountField(e.target.value)} value={amountField} />}
+            <Button variant="contained" onClick={() => onClickSubmitButton(actionType, amountField)}>{actionType}</Button>
           </Stack>
         }
       </Paper>
